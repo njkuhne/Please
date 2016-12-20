@@ -10,17 +10,13 @@ import UIKit
 
 public class Please: NSObject {
 	public static func cache(image:String) {
-		
+		let please = self.sharedPlease
 	}
 	public static func retrieve(image:String, completion : ((UIImage) -> Void)) {
-
+		let please = self.sharedPlease
 	}
 	
-	func hasCachedImage(forImageLocation imageLocation: String) -> Bool {
-		return false
-	}
+	private static let sharedPlease = Please()
 	
-	func beginCaching(imageLocation: String) {
-		
-	}
- }
+	private let cache = ImageAndFileCache()
+}
