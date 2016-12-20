@@ -1,0 +1,6 @@
+framework module Please {
+  umbrella header "Please-umbrella.h"
+
+  export *
+  module * { export * }
+}
