@@ -37,8 +37,8 @@ public class Please: NSObject {
 	func retrieve(imageLocation:String, completion : ((UIImage) -> Void)? = nil) {
 		for fetchable in fetchables {
 			if fetchable.canFetchImage(forUniversalLocation: imageLocation) {
-				fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { (image: UIImage) in
-					didFetch(image: image, forLocation: imageLocation)
+				fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { [unowned self] (image: UIImage) in
+					self.didFetch(image: image, forLocation: imageLocation)
 					if let completion = completion {
 						completion(image)
 					}
@@ -48,7 +48,7 @@ public class Please: NSObject {
 	}
 	
 	func didFetch(image: UIImage, forLocation: String) {
-		self.storables.forEach { (storable : ImageStorable) in
+		storables.forEach { (storable : ImageStorable) in
 			storable.store(image: image, forUniversalLocation: forLocation)
 		}
 	}
@@ -56,7 +56,7 @@ public class Please: NSObject {
 
 protocol ImageFetchable {
 	func canFetchImage(forUniversalLocation location: String) -> Bool
-	func fetchImage(forUniversalLocation location: String, andCompletion: ((UIImage) -> Void))
+	func fetchImage(forUniversalLocation location: String, andCompletion: @escaping ((UIImage) -> Void))
 }
 
 protocol ImageStorable {

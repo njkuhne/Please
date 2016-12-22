@@ -11,12 +11,12 @@ import UIKit
 class ImageCache: ImageFetchable, ImageStorable {
 	private let cache = NSCache<NSString, UIImage>()
 	
-	// MARK ImageFetchable
+	// MARK: ImageFetchable
 	func canFetchImage(forUniversalLocation location: String) -> Bool {
 		return (cache.object(forKey: location as NSString) != nil)
 	}
 	
-	func fetchImage(forUniversalLocation location: String, andCompletion: ((UIImage) -> Void)) {
+	func fetchImage(forUniversalLocation location: String, andCompletion: @escaping ((UIImage) -> Void)) {
 		guard canFetchImage(forUniversalLocation: location) else {
 			return
 		}
