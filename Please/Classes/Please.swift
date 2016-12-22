@@ -12,7 +12,7 @@ public class Please: NSObject {
 	public static func cache(imageLocation:String) {
 		self.sharedPlease.cache(imageLocation: imageLocation)
 	}
-	public static func retrieve(imageLocation:String, completion : ((UIImage) -> Void)) {
+	public static func retrieve(imageLocation:String, completion : @escaping ((UIImage) -> Void)) {
 		self.sharedPlease.retrieve(imageLocation: imageLocation, completion: completion)
 	}
 	
@@ -20,7 +20,7 @@ public class Please: NSObject {
 	
 	let imageCache = ImageCache()
 	let fileStorage = FileStorage()
-	let imageDownloader = Network()
+	let imageDownloader = ImageFetcher()
 	
 	var fetchables: [ImageFetchable]
 	var storables: [ImageStorable]
@@ -31,10 +31,20 @@ public class Please: NSObject {
 	}
 	
 	func cache(imageLocation:String) {
-		
+		self.retrieve(imageLocation: imageLocation, completion: nil)
 	}
 	
-	func retrieve(imageLocation:String, completion : ((UIImage) -> Void)) {
+	func retrieve(imageLocation:String, completion : ((UIImage) -> Void)? = nil) {
+		for fetchable in fetchables {
+			if fetchable.canFetchImage(forUniversalLocation: imageLocation) {
+				fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { (image: UIImage) in
+					didFetch(image: image, forLocation: imageLocation)
+					if let completion = completion {
+						completion(image)
+					}
+				})
+			}
+		}
 	}
 	
 	func didFetch(image: UIImage, forLocation: String) {

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class Network: ImageFetchable {
+class ImageFetcher: ImageFetchable {
 	
-	// MARK ImageRetrievable
+	// MARK ImageFetchable
 	func canFetchImage(forUniversalLocation location: String) -> Bool {
 		return true
 	}
