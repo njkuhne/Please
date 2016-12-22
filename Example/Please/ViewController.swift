@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 	@IBOutlet var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-		self.imageView.retrieve(image:imageURL)
+		self.imageView.retrieve(imageLocation:imageURL)
     }
 
 }

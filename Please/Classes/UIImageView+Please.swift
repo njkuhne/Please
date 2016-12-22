@@ -9,13 +9,13 @@
 import Foundation
 
 public protocol Pleasing {
-	func retrieve(image:String)
+	func retrieve(imageLocation:String)
 	func cancel()
 }
 
 extension UIImageView : Pleasing {
-	public func retrieve(image:String) {
-		ImageViewLoader.retrieve(image: image, forImageView: self)
+	public func retrieve(imageLocation:String) {
+		ImageViewLoader.retrieve(imageLocation: imageLocation, forImageView: self)
 	}
 	public func cancel() {
 		ImageViewLoader.cancel(loadingImageView: self)
@@ -27,8 +27,8 @@ class ImageViewLoader : NSObject {
 	
 	static let sharedLoader = ImageViewLoader()
 	
-	static func retrieve(image: String, forImageView imageView: UIImageView) {
-		self.sharedLoader.retrieve(image: image, forImageView: imageView)
+	static func retrieve(imageLocation: String, forImageView imageView: UIImageView) {
+		self.sharedLoader.retrieve(image: imageLocation, forImageView: imageView)
 	}
 	
 	static func cancel(loadingImageView imageView : UIImageView) {
@@ -43,7 +43,7 @@ class ImageViewLoader : NSObject {
 		}
 		self.imageViewMap.setObject(completion as AnyObject, forKey: imageView)
 		
-		Please.retrieve(image: image) { (image: UIImage) in
+		Please.retrieve(imageLocation: image) { (image: UIImage) in
 			self.fireCompletion(forImageView: imageView, withImage: image)
 		}
 	}
