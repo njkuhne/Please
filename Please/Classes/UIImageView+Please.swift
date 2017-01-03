@@ -55,7 +55,7 @@ class ImageViewLoader : NSObject {
 	private func fireCompletion(forImageView imageView: UIImageView, withImage image: UIImage) {
 		if let completionBlock = self.imageViewMap.object(forKey: imageView) as? ImageViewLoaderCompletion {
 			self.imageViewMap.removeObject(forKey: imageView)
-			DispatchQueue.main.sync {
+			DispatchQueue.main.async {
 				completionBlock(image)
 			}
 		}

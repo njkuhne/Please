@@ -64,6 +64,12 @@ class DataDownloader : NSObject, URLSessionDownloadDelegate {
 	}
 	
 	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-		
+		if let data = NSData.init(contentsOf: location) {
+			if let image = UIImage(data: data as Data) {
+				for completion in completions {
+					completion(image)
+				}
+			}
+		}
 	}
 }
