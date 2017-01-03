@@ -35,16 +35,23 @@ public class Please: NSObject {
 	}
 	
 	func retrieve(imageLocation:String, completion : ((UIImage) -> Void)? = nil) {
+		if let fetchable = self.firstFetchableThatCanFetch(imageLocation: imageLocation) {
+			fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { [unowned self] (image: UIImage) in
+				self.didFetch(image: image, forLocation: imageLocation)
+				if let completion = completion {
+					completion(image)
+				}
+			})
+		}
+	}
+	
+	func firstFetchableThatCanFetch(imageLocation:String) -> ImageFetchable? {
 		for fetchable in fetchables {
 			if fetchable.canFetchImage(forUniversalLocation: imageLocation) {
-				fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { [unowned self] (image: UIImage) in
-					self.didFetch(image: image, forLocation: imageLocation)
-					if let completion = completion {
-						completion(image)
-					}
-				})
+				return fetchable
 			}
 		}
+		return nil
 	}
 	
 	func didFetch(image: UIImage, forLocation: String) {
