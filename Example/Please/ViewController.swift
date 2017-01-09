@@ -14,7 +14,9 @@ class ViewController: UIViewController {
 	@IBOutlet var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-		self.imageView.retrieve(imageLocation:imageURL)
+		if let url = URL(string: imageURL) {
+			self.imageView.url = url
+		}
     }
 
 }

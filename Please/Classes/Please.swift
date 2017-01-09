@@ -2,66 +2,19 @@
 //  Please.swift
 //  Pods
 //
-//  Created by Nicholas Kuhne on 2016-12-20.
+//  Created by Nicholas Kuhne on 2017-01-09.
 //
 //
 
 import UIKit
 
-public class Please: NSObject {
-	public static func cache(imageLocation:String) {
-		self.sharedPlease.cache(imageLocation: imageLocation)
+extension UIImage: PleaseCachable {
+	public static func convertToObject(data: Data) -> PleaseCachable {
+		return UIImage(data: data)!
 	}
-	public static func retrieve(imageLocation:String, completion : @escaping ((UIImage) -> Void)) {
-		self.sharedPlease.retrieve(imageLocation: imageLocation, completion: completion)
-	}
-	
-	private static let sharedPlease = Please()
-	
-	let imageCache = ImageCache()
-	let fileStorage = FileStorage()
-	let imageDownloader = ImageFetcher()
-	
-	var fetchables: [ImageFetchable]
-	var storables: [ImageStorable]
-	
-	override init() {
-		self.fetchables = [imageCache, fileStorage, imageDownloader]
-		self.storables = [imageCache, fileStorage]
-	}
-	
-	func cache(imageLocation:String) {
-		self.retrieve(imageLocation: imageLocation, completion: nil)
-	}
-	
-	func retrieve(imageLocation:String, completion : ((UIImage) -> Void)? = nil) {
-		if let fetchable = self.fetchablesThatCanFetch(imageLocation: imageLocation)?.first {
-			fetchable.fetchImage(forUniversalLocation: imageLocation, andCompletion: { [unowned self] (image: UIImage) in
-				self.didFetch(image: image, forLocation: imageLocation)
-				completion?(image)
-			})
-		}
-	}
-	
-	func fetchablesThatCanFetch(imageLocation:String) -> [ImageFetchable]? {
-		return fetchables.filter({ (fetchable: ImageFetchable) -> Bool in
-			return fetchable.canFetchImage(forUniversalLocation: imageLocation)
-		})
-	}
-	
-	func didFetch(image: UIImage, forLocation: String) {
-		storables.forEach { (storable : ImageStorable) in
-			storable.store(image: image, forUniversalLocation: forLocation)
-		}
+	public static func convertToData(cachable: PleaseCachable) -> Data {
+		return UIImagePNGRepresentation(cachable as! UIImage)!
 	}
 }
 
-protocol ImageFetchable {
-	func canFetchImage(forUniversalLocation location: String) -> Bool
-	func fetchImage(forUniversalLocation location: String, andCompletion: @escaping ((UIImage) -> Void))
-}
-
-protocol ImageStorable {
-	func store(image: UIImage, forUniversalLocation location: String) -> Bool
-}
-
+public let Please = Pleaser<UIImage>()
