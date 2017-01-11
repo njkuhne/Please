@@ -8,55 +8,43 @@
 
 import UIKit
 
-class FileStorage: ImageFetchable, ImageStorable {
+class FileStorage<Cachable: PleaseCachable>: Fetchable, Storable {
 	private let storageDirectory = NSTemporaryDirectory()
 	private let fileManager = FileManager.default
 	
-	// MARK: ImageFetchable
-	func canFetchImage(forUniversalLocation location: String) -> Bool {
-		let path = self.path(forIdentifier: location)
+	// MARK: Fetchable
+	func canFetch(url: URL) -> Bool {
+		let path = self.path(forUniversalLocation: url)
 		return fileManager.fileExists(atPath: path)
 	}
 	
-	func fetchImage(forUniversalLocation location: String, andCompletion: @escaping ((UIImage) -> Void)) {
-		guard canFetchImage(forUniversalLocation: location) else {
+	func fetch(url: URL, withCompletion: @escaping ((PleaseCachable) -> Void)) {
+		guard canFetch(url: url) else {
 			return
 		}
-		let path = self.path(forIdentifier: location)
+		let path = self.path(forUniversalLocation: url)
 		if let data = fileManager.contents(atPath: path) {
-			if let image = self.image(forData: data) {
-				andCompletion(image)
-			}
+			let cachable = Cachable.convertToObject(data: data)
+			withCompletion(cachable)
 		}
 	}
 	
-	// MARK: ImageStorable
-	
-	func store(image: UIImage, forUniversalLocation location: String) -> Bool {
-		guard canFetchImage(forUniversalLocation: location) == false else {
+	// MARK: Storable
+	func store(object: PleaseCachable, forURL: URL) -> Bool {
+		guard canFetch(url: forURL) == false else {
 			return false
 		}
-		let path = self.path(forIdentifier: location)
-		if let data = self.data(forImage: image) {
-			return fileManager.createFile(atPath: path, contents: data as Data, attributes: nil)
-		}
-		return false
+		let data = Cachable.convertToData(cachable: object)
+		let path = self.path(forUniversalLocation: forURL)
+		return fileManager.createFile(atPath: path, contents: data as Data, attributes: nil)
 	}
 	
 	// MARK: Helpers
-	private func path(forIdentifier identifier: String) -> String {
-		return storageDirectory + "/" + self.storableFileName(forIdentifier: identifier)
+	private func path(forUniversalLocation url: URL) -> String {
+		return storageDirectory + "/" + self.storableFileName(forUniversalLocation: url)
 	}
 	
-	private func storableFileName(forIdentifier identifier: String) -> String {
-		return "\(identifier.hash)"
-	}
-	
-	private func data(forImage image: UIImage) -> NSData? {
-		return UIImagePNGRepresentation(image) as NSData?
-	}
-	
-	private func image(forData data: Data) -> UIImage? {
-		return UIImage(data: data)
+	private func storableFileName(forUniversalLocation url: URL) -> String {
+		return "\(url.absoluteString.hash)"
 	}
 }
