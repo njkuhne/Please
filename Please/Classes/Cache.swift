@@ -1,36 +1,32 @@
 //
-//  ImageCache.swift
+//  Cache.swift
 //  Pods
 //
-//  Created by Nicholas Kuhne on 2016-12-20.
+//  Created by Nicholas Kuhne on 2017-02-22.
 //
 //
 
-import UIKit
+import Foundation
 
-class Cache<Cachable: PleaseCachable>: Fetchable, Storable {
-	private let cache = NSCache<NSURL, Cachable>()
-	
-	// MARK: Fetchable
-	func canFetch(url: URL) -> Bool {
-		return (cache.object(forKey: url as NSURL) != nil)
+class Cache<T: Cachable> {
+	static func cache(url: URL) {
+		
 	}
-	
-	func fetch(url: URL, withCompletion: @escaping ((PleaseCachable) -> Void)) {
-		guard canFetch(url: url) else {
-			return
-		}
-		if let cachable = cache.object(forKey: url as NSURL) as? PleaseCachable {
-			withCompletion(cachable)
+	static func retrieve(url: URL, completion: ((T) -> Void)? = nil) {
+		
+	}
+}
+
+
+extension Cache {
+	static func cache(url: String) {
+		if let url = URL(string: url) {
+			cache(url: url)
 		}
 	}
-	
-	// MARK Storable
-	func store(object: PleaseCachable, forURL: URL) -> Bool {
-		if let object = object as? Cachable {
-			cache.setObject(object, forKey: forURL as NSURL)
-			return true
+	static func retrieve(url: String, completion: ((T) -> Void)? = nil) {
+		if let url = URL(string: url) {
+			retrieve(url: url, completion: completion)
 		}
-		return false
 	}
 }
