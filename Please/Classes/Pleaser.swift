@@ -17,16 +17,16 @@ public class Pleaser<Cachable: PleaseCachable>: NSObject {
 	public func cache(url:URL) {
 		self.retrieve(url: url, completion: nil)
 	}
-	public func retrieve(url:URL, completion : ((PleaseCachable) -> Void)? = nil) {
+	public func retrieve(url:URL, completion : ((Cachable) -> Void)? = nil) {
 		if let fetchable = self.fetchablesThatCanFetch(url: url)?.first {
-			fetchable.fetch(url: url, withCompletion: { (cachable: PleaseCachable) in
+			fetchable.fetch(url: url, withCompletion: { (cachable: Cachable) in
 				if let completion = completion {
 					completion(cachable)
 				}
 				if let cachable = cachable as? Cachable {
 					self.didFetch(cachable:cachable, forURL:url)
 				}
-			})
+			} as! ((PleaseCachable) -> Void))
 		}
 	}
 	
