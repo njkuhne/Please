@@ -8,18 +8,14 @@
 
 import Foundation
 
-class FileDownloader: Fetchable {
-	let fileSystemStorable: FileSystemStorable
+class FileDownloader: NSObject, URLSessionDownloadDelegate {
 	
-	init(fileSystemStorable: FileSystemStorable) {
-		self.fileSystemStorable = fileSystemStorable
+	// MARK: URLSessionDownloadDelegate
+	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+		
 	}
 	
-	// MARK: Fetchable
-	func canFetch(for: URL) -> Bool {
-		return true
-	}
-	func fetch(for: URL, completion: ((Cachable) -> Void)) {
+	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
 		
 	}
 }
