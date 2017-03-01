@@ -10,5 +10,5 @@ import Foundation
 
 protocol FileSystemStorable {
 	func store(data: Data, withIdentifier: String) -> Bool
-	func copy(localFile: URL, withIdentifier: String) -> Bool
+	func move(localFile: URL, withIdentifier: String) -> Bool
 }

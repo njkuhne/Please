@@ -13,22 +13,22 @@ fileprivate func localStoragePath() -> String {
 }
 
 fileprivate func storagePath(forIdentifier: String) -> String {
-	return localStoragePath() + "/" + forIdentifier
+	return localStoragePath() + forIdentifier + ".temp"
 }
 
 class LocalStorageCoordinator: FileSystemStorable, FileSystemFetchable {
-	let fileManager = FileManager.default
+	private let fileManager = FileManager.default
 	
 	// MARK: FileSystemStorable
 	func store(data: Data, withIdentifier: String) -> Bool {
 		return fileManager.createFile(atPath: storagePath(forIdentifier: withIdentifier), contents: data)
 	}
-	func copy(localFile: URL, withIdentifier: String) -> Bool {
+	func move(localFile: URL, withIdentifier: String) -> Bool {
 		let identifierURL = URL(fileURLWithPath: storagePath(forIdentifier: withIdentifier))
 		do {
 			try fileManager.moveItem(at: localFile, to: identifierURL)
 		}
-		catch _ {
+		catch let error as Error {
 			return false
 		}
 		return true

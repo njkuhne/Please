@@ -20,7 +20,7 @@ class ObjectCache<T:Cachable>: Fetchable, Storable {
 		return (cache.object(forKey: url as! NSURL) != nil)
 	}
 	
-	func fetch(for url: URL, completion: ((Cachable) -> Void)) {
+	func fetch(for url: URL, completion: @escaping ((Cachable) -> Void)) {
 		if let object = cache.object(forKey: url as! NSURL) {
 			completion(object)
 		}

@@ -8,14 +8,47 @@
 
 import Foundation
 
-class FileDownloader: NSObject, URLSessionDownloadDelegate {
+enum FileDownloaderState {
+	case notStarted
+	case running
+	case finished
+	case failed
+}
+
+typealias FileDownloaderCompletion = (_ tempFileURL: URL) -> Void
+class FileDownloader: NSObject {
 	
-	// MARK: URLSessionDownloadDelegate
-	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-		
+	let url: URL
+	let completion: FileDownloaderCompletion
+	
+	var state: FileDownloaderState = .notStarted
+	
+	private lazy var session: URLSession = {
+		return URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: OperationQueue.main)
+	}()
+	
+	init(url: URL, completion: @escaping FileDownloaderCompletion) {
+		self.url = url
+		self.completion = completion
+		super.init()
 	}
 	
-	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+	func start() {
+		let task = session.downloadTask(with: url) {[unowned self] (url: URL?, response: URLResponse?, error: Error?) in
+			if let url = url {
+				self.finish(withURL: url)
+			}
+			else if let error = error {
+				self.state = .failed
+			}
+		}
 		
+		state = .running
+		task.resume()
+	}
+	
+	private func finish(withURL: URL) {
+		state = .finished
+		completion(withURL)
 	}
 }

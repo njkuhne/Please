@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Cachable: AnyObject {
+public protocol Cachable: AnyObject {
 	init?(data:Data)
 }

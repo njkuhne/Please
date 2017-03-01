@@ -10,5 +10,5 @@ import Foundation
 
 protocol Fetchable {
 	func canFetch(for: URL) -> Bool
-	func fetch(for: URL, completion: ((Cachable) -> Void))
+	func fetch(for: URL, completion: @escaping ((Cachable) -> Void))
 }

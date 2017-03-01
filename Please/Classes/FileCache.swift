@@ -8,12 +8,8 @@
 
 import Foundation
 
-fileprivate func uniqueIdentifier(forURL: URL) -> String {
-	return ""
-}
-
 class FileCache<T:Cachable>: Fetchable {
-	let fileSystemFetchable: FileSystemFetchable
+	private let fileSystemFetchable: FileSystemFetchable
 	
 	init(fileSystemFetchable: FileSystemFetchable) {
 		self.fileSystemFetchable = fileSystemFetchable
@@ -24,7 +20,7 @@ class FileCache<T:Cachable>: Fetchable {
 		return fileSystemFetchable.has(fileWithIdentifier: uniqueIdentifier(forURL: url))
 	}
 	
-	func fetch(for url: URL, completion: ((Cachable) -> Void)) {
+	func fetch(for url: URL, completion: @escaping ((Cachable) -> Void)) {
 		if let data = fileSystemFetchable.load(fromFileWithIdentifier: uniqueIdentifier(forURL: url)), let cachable = T(data: data) {
 			completion(cachable)
 		}
