@@ -20,11 +20,11 @@ class LocalStorageCoordinator: FileSystemStorable, FileSystemFetchable {
 	private let fileManager = FileManager.default
 	
 	// MARK: FileSystemStorable
-	func store(data: Data, withIdentifier: String) -> Bool {
-		return fileManager.createFile(atPath: storagePath(forIdentifier: withIdentifier), contents: data)
+	func store(data: Data, withIdentifier: Identifiable) -> Bool {
+		return fileManager.createFile(atPath: storagePath(forIdentifier: withIdentifier.identifierString), contents: data)
 	}
-	func move(localFile: URL, withIdentifier: String) -> Bool {
-		let identifierURL = URL(fileURLWithPath: storagePath(forIdentifier: withIdentifier))
+	func move(localFile: URL, withIdentifier: Identifiable) -> Bool {
+		let identifierURL = URL(fileURLWithPath: storagePath(forIdentifier: withIdentifier.identifierString))
 		do {
 			try fileManager.moveItem(at: localFile, to: identifierURL)
 		}
@@ -35,11 +35,11 @@ class LocalStorageCoordinator: FileSystemStorable, FileSystemFetchable {
 	}
 	
 	// MARK: FileSystemFetchable
-	func has(fileWithIdentifier: String) -> Bool {
-		return fileManager.fileExists(atPath: storagePath(forIdentifier: fileWithIdentifier))
+	func has(fileWithIdentifier: Identifiable) -> Bool {
+		return fileManager.fileExists(atPath: storagePath(forIdentifier: fileWithIdentifier.identifierString))
 	}
 	
-	func load(fromFileWithIdentifier: String) -> Data? {
-		return fileManager.contents(atPath: storagePath(forIdentifier: fromFileWithIdentifier))
+	func load(fromFileWithIdentifier: Identifiable) -> Data? {
+		return fileManager.contents(atPath: storagePath(forIdentifier: fromFileWithIdentifier.identifierString))
 	}
 }

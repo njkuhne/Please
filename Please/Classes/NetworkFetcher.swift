@@ -55,8 +55,7 @@ class NetworkFetcher<T: Cachable>: Fetchable {
 	}
 	
 	func didFinishDownload(for url: URL, tempURL: URL) {
-		let identifier = uniqueIdentifier(forURL: url)
-		if self.fileSystem.move(localFile: tempURL, withIdentifier: identifier), let data = fileSystem.load(fromFileWithIdentifier: identifier) {
+		if self.fileSystem.move(localFile: tempURL, withIdentifier: url), let data = fileSystem.load(fromFileWithIdentifier: url) {
 			if let object = T(data: data), let completions = completions[url] {
 				for completion in completions {
 					completion(object)

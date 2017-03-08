@@ -17,11 +17,11 @@ class FileCache<T:Cachable>: Fetchable {
 	
 	// MARK: Fetchable
 	func canFetch(for url: URL) -> Bool {
-		return fileSystemFetchable.has(fileWithIdentifier: uniqueIdentifier(forURL: url))
+		return fileSystemFetchable.has(fileWithIdentifier: url)
 	}
 	
 	func fetch(for url: URL, completion: @escaping ((Cachable) -> Void)) {
-		if let data = fileSystemFetchable.load(fromFileWithIdentifier: uniqueIdentifier(forURL: url)), let cachable = T(data: data) {
+		if let data = fileSystemFetchable.load(fromFileWithIdentifier: url), let cachable = T(data: data) {
 			completion(cachable)
 		}
 	}

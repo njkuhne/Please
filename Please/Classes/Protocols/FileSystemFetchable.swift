@@ -9,6 +9,6 @@
 import Foundation
 
 protocol FileSystemFetchable {
-	func has(fileWithIdentifier: String) -> Bool
-	func load(fromFileWithIdentifier: String) -> Data?
+	func has(fileWithIdentifier: Identifiable) -> Bool
+	func load(fromFileWithIdentifier: Identifiable) -> Data?
 }

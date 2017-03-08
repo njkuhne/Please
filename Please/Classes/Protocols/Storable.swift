@@ -8,11 +8,6 @@
 
 import Foundation
 
-
-func uniqueIdentifier(forURL: URL) -> String {
-	return "\(forURL.hashValue)"
-}
-
 protocol Storable {
 	func store(object: Cachable, for: URL) -> Bool
 }
