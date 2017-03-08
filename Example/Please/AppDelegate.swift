@@ -18,9 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 		
-		if let url = URL.init(string: imageURL) {
-			Please.cache(url:url)
-		}
+		Please.cache(url: imageURL)
 		
 		return true
 	}

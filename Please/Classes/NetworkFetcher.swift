@@ -1,70 +1,69 @@
 //
-//  Protocols.swift
+//  NetworkFetcher.swift
 //  Pods
 //
-//  Created by Nicholas Kuhne on 2016-12-22.
+//  Created by Nicholas Kuhne on 2017-02-23.
 //
 //
 
-import UIKit
+import Foundation
 
-class NetworkFetcher<Cachable: PleaseCachable>: Fetchable {
+typealias NetworkCompletion = ((Cachable) -> Void)
+
+class NetworkFetcher<T: Cachable>: Fetchable {
+	private let fileSystem: FileSystemStorable & FileSystemFetchable
 	
-	var downloaders = Array<DataDownloader<Cachable>>()
+	init(fileSystem: FileSystemStorable & FileSystemFetchable) {
+		self.fileSystem = fileSystem
+	}
+	
+	private var downloaders: Dictionary<URL, FileDownloader> = [:]
+	private var completions: Dictionary<URL, Array<NetworkCompletion>> = [:]
 	
 	// MARK: Fetchable
-	func canFetch(url: URL) -> Bool {
+	func canFetch(for url: URL) -> Bool {
 		return true
 	}
 	
-	func fetch(url: URL, withCompletion: @escaping ((PleaseCachable) -> Void)) {
-		var existingDownloader : DataDownloader<Cachable>?
-		downloaders.forEach { (downloader : DataDownloader) in
-			if downloader.dataURL == url {
-				existingDownloader = downloader
-			}
-		}
-		if let downloader = existingDownloader {
-			downloader.completions.append(withCompletion)
+	func fetch(for url: URL, completion: @escaping ((Cachable) -> Void)) {
+		if self.downloaders[url] != nil {
+			appendCompletion(for: url, completion: completion)
 		}
 		else {
-			let downloader = DataDownloader<Cachable>(url: url, completion: withCompletion)
-			downloader.begin()
-			self.downloaders.append(downloader)
+			createNewDownloader(for: url, completion: completion)
 		}
 	}
-}
-
-typealias DataDownloaderCompletion = (PleaseCachable) -> (Void)
-class DataDownloader<Cachable: PleaseCachable> : NSObject, URLSessionDownloadDelegate {
 	
-	let dataURL : URL
-	var completions = Array<DataDownloaderCompletion>()
-	
-	init(url: URL, completion: @escaping DataDownloaderCompletion) {
-		dataURL = url
-		completions.append(completion)
+	private func appendCompletion(for url: URL, completion: @escaping NetworkCompletion) {
+		if var completions = self.completions[url] {
+			completions.append(completion)
+			self.completions[url] = completions
+		}
+		else {
+			self.completions[url] = [completion]
+		}
 	}
 	
-	private lazy var session: URLSession = {
-		return URLSession.init(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-	}()
-	
-	func begin() {
-		let task = self.session.downloadTask(with: dataURL)
-		task.resume()
+	private func createNewDownloader(for url: URL, completion: @escaping NetworkCompletion) {
+		let downloader = FileDownloader(url: url) { (tempURL) in
+			self.didFinishDownload(for: url, tempURL: tempURL)
+		}
+		downloaders[url] = downloader
+		self.appendCompletion(for: url, completion: completion)
+		
+		downloader.start()
 	}
 	
-	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-		do {
-			let data = try Data(contentsOf: location)
-			let object = Cachable.convertToObject(data: data)
-			completions.forEach({ (completion: DataDownloaderCompletion) in
-				completion(object)
-			})
+	func didFinishDownload(for url: URL, tempURL: URL) {
+		if self.fileSystem.move(localFile: tempURL, withIdentifier: url), let data = fileSystem.load(fromFileWithIdentifier: url) {
+			if let object = T(data: data), let completions = completions[url] {
+				for completion in completions {
+					completion(object)
+				}
+			}
 		}
-		catch _ {
-			print("")
-		}
+		
+		downloaders[url] = nil
+		completions[url] = nil
 	}
 }

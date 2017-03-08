@@ -2,19 +2,12 @@
 //  Please.swift
 //  Pods
 //
-//  Created by Nicholas Kuhne on 2017-01-09.
+//  Created by Nicholas Kuhne on 2017-03-01.
 //
 //
 
 import UIKit
 
-extension UIImage: PleaseCachable {
-	public static func convertToObject(data: Data) -> PleaseCachable {
-		return UIImage(data: data)!
-	}
-	public static func convertToData(cachable: PleaseCachable) -> Data {
-		return UIImagePNGRepresentation(cachable as! UIImage)!
-	}
-}
+extension UIImage: Cachable {} // UIImage already has init?(data: Data)
 
-public let Please = Pleaser<UIImage>()
+public let Please = Cache<UIImage>()
