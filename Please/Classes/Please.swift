@@ -11,3 +11,15 @@ import UIKit
 extension UIImage: Cachable {} // UIImage already has init?(data: Data)
 
 public let Please = Cache<UIImage>()
+
+extension UIImageView: URLLoading {
+	public typealias T = UIImage
+	
+	public func cache() -> Cache<UIImage> {
+		return Please
+	}
+	
+	public func completedLoading(with: UIImage) {
+		self.image = with
+	}
+}

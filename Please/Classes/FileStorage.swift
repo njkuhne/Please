@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FileCache<T:Cachable>: Fetchable {
+class FileStorage<T:Cachable>: Fetchable {
 	private let fileSystemFetchable: FileSystemFetchable
 	
 	init(fileSystemFetchable: FileSystemFetchable) {

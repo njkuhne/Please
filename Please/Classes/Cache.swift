@@ -18,12 +18,12 @@ public class Cache<T: Cachable> {
 	
 	private let objectCache = ObjectCache<T>()
 	let storageCoordinator = LocalStorageCoordinator()
-	let fileCache: FileCache<T>
+	let fileCache: FileStorage<T>
 	let network: NetworkFetcher<T>
 	let fetchables: [Fetchable]
 	
 	init() {
-		self.fileCache = FileCache<T>(fileSystemFetchable: storageCoordinator)
+		self.fileCache = FileStorage<T>(fileSystemFetchable: storageCoordinator)
 		self.network = NetworkFetcher<T>(fileSystem: storageCoordinator)
 		self.fetchables = [self.objectCache, self.fileCache, self.network]
 	}
@@ -32,7 +32,7 @@ public class Cache<T: Cachable> {
 	private func retrieve(url: URL, completionOrNil:((T) -> Void)? = nil) {
 		if let fetchable = firstFetchable(url: url) {
 			fetchable.fetch(for: url, completion: { [unowned self] (object) in
-				self.objectCache.store(object: object, for: url)
+				_ = self.objectCache.store(object: object, for: url)
 				if let completion = completionOrNil, let object = object as? T {
 					completion(object)
 				}

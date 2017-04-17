@@ -16,10 +16,11 @@
 		3A129F6EC92B8E2756F463D8AB6BE759 /* NetworkFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524401EF8EB5A77FEE1CE9AA6903179A /* NetworkFetcher.swift */; };
 		549A77E6EFC27BF385F1B5B139F86711 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		63129E13ABE1FF88CCA4A76DFB441DA5 /* Please.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35C6B26A9A7A3D090E194330F34B07 /* Please.swift */; };
+		653ADAA41E70AF00000CF54A /* URLLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653ADAA31E70AF00000CF54A /* URLLoading.swift */; };
 		655BF8BE1E6A0FF400A1E414 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655BF8BD1E6A0FF400A1E414 /* Identifiable.swift */; };
 		7D29AB78A7B0C1EAF9F29FF7AE431CC6 /* ObjectCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB6227F15261F1B0910A3A3190968A /* ObjectCache.swift */; };
 		8120E563FD3BF82FC6DCB6A5E6660663 /* Please-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A999CF9725E7D8349655CD9364DD6F11 /* Please-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		85D60F04B13802BE6C3157AD045A9B89 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8327B7D491513E7579000CFD8B81ED /* FileCache.swift */; };
+		85D60F04B13802BE6C3157AD045A9B89 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8327B7D491513E7579000CFD8B81ED /* FileStorage.swift */; };
 		9C93C29F4BAAE6C34EAAF18CAFC379D3 /* Pods-Please_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D9BC430FFDE011B1EBFB52A0EF81E5 /* Pods-Please_Example-dummy.m */; };
 		A096BA127E5926DA311367E1F7DF0060 /* Pods-Please_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FBB251FA3D570964888F4CCD776EB5 /* Pods-Please_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A256B3A542C2DD7C345A0E86A4DDE3C3 /* Pods-Please_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C734F053E2F7941FE28D364D8AD974 /* Pods-Please_Tests-dummy.m */; };
@@ -52,7 +53,7 @@
 		12722F4C2B630A479A003DCC5A164678 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17E9E1EC805F44BEB8486D14EC0E83D6 /* Please.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Please.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4F983C116796D47B624277B0776FE0 /* Please-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Please-dummy.m"; sourceTree = "<group>"; };
-		1A8327B7D491513E7579000CFD8B81ED /* FileCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		1A8327B7D491513E7579000CFD8B81ED /* FileStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		27BE8237F1E497CC05D54EE8A1FB7399 /* Please-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Please-prefix.pch"; sourceTree = "<group>"; };
 		343C8BA4C74F48392C8E14E5AA492541 /* Fetchable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		36FF5AE6ACF1CFE5A1189C1A0D303803 /* Pods-Please_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Please_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		524401EF8EB5A77FEE1CE9AA6903179A /* NetworkFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkFetcher.swift; sourceTree = "<group>"; };
 		5861DDDC3D79C543DA941620C7FCEAFD /* Pods-Please_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Please_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		5F85C0166F896C562148BB6DCA2D370A /* LocalStorageCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalStorageCoordinator.swift; sourceTree = "<group>"; };
+		653ADAA31E70AF00000CF54A /* URLLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLLoading.swift; sourceTree = "<group>"; };
 		65578A3DA12D872E7290802CAE59DD3F /* Pods_Please_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Please_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		655BF8BD1E6A0FF400A1E414 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		76D9BC430FFDE011B1EBFB52A0EF81E5 /* Pods-Please_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Please_Example-dummy.m"; sourceTree = "<group>"; };
@@ -164,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				9BAC29027B52A1600642ECBE40F6745B /* Cache.swift */,
-				1A8327B7D491513E7579000CFD8B81ED /* FileCache.swift */,
+				1A8327B7D491513E7579000CFD8B81ED /* FileStorage.swift */,
 				8286AC75128DFB3631085C4CF546130A /* FileDownloader.swift */,
 				5F85C0166F896C562148BB6DCA2D370A /* LocalStorageCoordinator.swift */,
 				524401EF8EB5A77FEE1CE9AA6903179A /* NetworkFetcher.swift */,
@@ -212,6 +214,7 @@
 				C98EE31006F1922E585A8DF0E699142E /* FileSystemStorable.swift */,
 				4A11D6C69115F7E5B9919FB0B33D3A8E /* Storable.swift */,
 				655BF8BD1E6A0FF400A1E414 /* Identifiable.swift */,
+				653ADAA31E70AF00000CF54A /* URLLoading.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -400,12 +403,13 @@
 				C7BE6789E7E5D4EA46E8383E19EAC096 /* Cachable.swift in Sources */,
 				1466BD198C46716E5F325A35B9437DA0 /* Cache.swift in Sources */,
 				FD85727A8732B2F0595A8467E5B0E87F /* Fetchable.swift in Sources */,
-				85D60F04B13802BE6C3157AD045A9B89 /* FileCache.swift in Sources */,
+				85D60F04B13802BE6C3157AD045A9B89 /* FileStorage.swift in Sources */,
 				B66CFB96DFB23BA85D2CC8F2146A73EF /* FileDownloader.swift in Sources */,
 				D700BC443C96EEE1152BA0F6A73CAE49 /* FileSystemFetchable.swift in Sources */,
 				A84A61E1DF808C7AFA1B498FA445DCC9 /* FileSystemStorable.swift in Sources */,
 				0127655CB1CCEA1F72154017A3519A50 /* LocalStorageCoordinator.swift in Sources */,
 				3A129F6EC92B8E2756F463D8AB6BE759 /* NetworkFetcher.swift in Sources */,
+				653ADAA41E70AF00000CF54A /* URLLoading.swift in Sources */,
 				7D29AB78A7B0C1EAF9F29FF7AE431CC6 /* ObjectCache.swift in Sources */,
 				AD46CFB77970479FA26FB76103EB7E66 /* Please-dummy.m in Sources */,
 				63129E13ABE1FF88CCA4A76DFB441DA5 /* Please.swift in Sources */,

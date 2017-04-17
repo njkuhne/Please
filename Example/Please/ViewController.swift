@@ -15,9 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		Please.retrieve(url: imageURL) { (image) in
-			self.imageView.image = image
-		}
+		self.imageView.urlString = imageURL
     }
 
 }
