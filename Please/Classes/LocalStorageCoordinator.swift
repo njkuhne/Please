@@ -28,7 +28,7 @@ class LocalStorageCoordinator: FileSystemStorable, FileSystemFetchable {
 		do {
 			try fileManager.moveItem(at: localFile, to: identifierURL)
 		}
-		catch let error as Error {
+		catch {
 			return false
 		}
 		return true

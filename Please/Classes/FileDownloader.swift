@@ -38,7 +38,7 @@ class FileDownloader: NSObject {
 			if let url = url {
 				self.finish(withURL: url)
 			}
-			else if let error = error {
+			else if error != nil {
 				self.state = .failed
 			}
 		}
