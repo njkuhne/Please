@@ -19,7 +19,7 @@ extension UIImageView: URLLoading {
 		return Please
 	}
 	
-	public func completedLoading(with: UIImage) {
-		self.image = with
+	public func completedLoading(with image: UIImage) {
+		self.image = image
 	}
 }
