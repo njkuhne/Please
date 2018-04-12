@@ -12,10 +12,11 @@ import Please
 class ViewController: UIViewController {
 
 	@IBOutlet var imageView: UIImageView!
-    override func viewDidLoad() {
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
 		
-		self.imageView.urlString = imageURL
+		self.imageView.url = url
     }
 
 }
