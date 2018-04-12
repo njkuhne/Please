@@ -6,7 +6,7 @@
 # Please
 #### Be Polite, be efficient. 
 
-`Please` is a library written in `Swift` with the singular purpose of making loading images from the network simple and less painful to developers at every expierence level. 
+`Please` is a library written in `Swift` with the singular purpose of making loading images from the network simple and less painful to developers at every experience level. 
 
 ## Please, let me tell you about a problem I have
 Having worked in web and in iOS, I have envied web developers for the maturity and simplicity of the tools and conventions they get to use. Some tasks can be handled so easily that the complexity held within them is often forgotten about. 
@@ -22,7 +22,7 @@ Our story begins in Browser-ville,
 
 **Ohh, That looks simple, I should use that!**
 
-Lets break down what the developer is asking to have done here:
+Let's break down what the developer is asking to have done here:
 
 1. Make space in the UI to display an image
 2. Here is a URL where you can find that image
@@ -36,17 +36,17 @@ Lets break down what the developer is asking to have done here:
 How an iOS dev thinks about this problem. 
 
 1. I need a UIImageView, I can set that up in my nib or storyboard.
-2. Maybe I can use `AFNetworking` for this! They have something for image loading right?
+2. Maybe I can use `Alamofire` for this! They have something for image loading right?
 3. Oh wait, what about cell recycling, if the cell data changes before the image is loaded, I guess I cancel the request, and spin off a new one? 
 4. Okay, so what if the request fails? Do I use a placeholder image or something? Do I try again if the error was lack of network? So I have to parse any error to figure this out and decide what to do. 
 5. I can check to see if the image data can be used to make a UIImage, that can help me sanity check the raw data.
-6. Caching? nah, it will be fine, most of my assets are in an assets catalog anyways, so its not a big deal. 
+6. Caching? nah, it will be fine, most of my assets are in an assets catalog anyways, so it's not a big deal. 
 
-As you can see, there is complex behaviour behind this simple HTML element, With one simple statement the developer can invoke complex UI and networking, and be can do so while being expressive and specific about what they want the browser to do.
+As you can see, there is complex behaviour behind this simple HTML element, with one simple statement the developer can invoke complex UI and networking, and he can do so while being expressive and specific about what they want the browser to do.
 
 ### Please, rescue me!
 
-So heres what I want to have happen.
+So here's what I want to have happen.
 
 `imageView.url = URL(string: "http://mysite.io/awesome_icon.png")`
 
@@ -80,7 +80,7 @@ Please is designed to work similarly to the way an HTML img tag would. This mean
 ### Advanced Usage
 
 #### Strings
-> Please, times are tough, i just want to throw a string in there. 
+> Please, times are tough, I just want to throw a string in there. 
 
 Look no further friend, Please use: 
 
